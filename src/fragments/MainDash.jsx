@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Cards";
+import TableData from "./TableData";
 import '../css/MainDash.css';
 
 const MainDash = () => {
@@ -9,6 +10,11 @@ const MainDash = () => {
                 Dashboard
             </h1>
             <Card/>
+
+            <h3>Recent Orders</h3>
+            <TableData/>
+
+            
 
         </div>
 

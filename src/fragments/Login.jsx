@@ -5,7 +5,7 @@ import 'boxicons';
 import Header from './Header';
 //import { InicioSesion, obtener } from '../hooks/Conexion'
 import { getRol, getToken, getUser, saveCorreo, saveRol, saveToken, saveUser } from '../utils/SessionUtil';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import mensajes from '../utils/Mensajes';
 import logoIcon from '../img/escudo.png';
