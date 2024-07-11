@@ -1,39 +1,49 @@
 import { borrarSesion } from '../utils/SessionUtil';
 import { useNavigate } from 'react-router';
+import { getRol } from '../utils/SessionUtil';
 import '../css/Header.css';
 import 'boxicons';
 
 
-const Header = () => {
-  const navegation = useNavigate();
+const BarraMenu = () => {
+    const navegation = useNavigate();
+    const rol = getRol();
 
-  const handleClick = () => {
-    borrarSesion();
-    navegation('/login');
-  }
-  return (
+    const handleClick = () => {
+        borrarSesion();
+        navegation('/principal');
+    }
+
+    return (
+        <header className='header1'>
+            <a href="/principalusuario" className="logo">NOMBRE APP</a>
+
+            <input type="checkbox" id='check' />
+            <label htmlFor="check" className='icons1'>
+                <i className='bx bx-menu' id='menu-icon'></i>
+                <i className='bx bx-x' id='close-icon'></i>
+            </label>
 
 
-    <header className='header'>
-      <input type="checkbox" id='check' />
-      <label htmlFor="check" className='icons'>
-        <i className='bx bx-menu' id='menu-icon'></i>
-        <i className='bx bx-x' id='close-icon'></i>
-      </label>
-      <nav className='navbar'>
-        <a href="/principal" >Home</a>
-        <a href="/login">Login</a>
-        <a href="/sobreapi">Sobre el API</a>
-        <a href="/contactos">Contactos</a>
-      </nav>
+            <nav className='navbar1'>
+                {rol === 'ADMINISTRADOR' && (
+                    <>
+                        <a href="/usuariosregistrados">Usuarios</a>
+                        <a href="/verpeticiones">Peticiones</a>
+                    </>
+                )}
+                {rol === 'USUARIO' && (
+                    <>
+                        <a href="/api">API</a>
+                        <a href="/principal">Monitor UV</a>
+                    </>
+                )}
+                <a href="/perfil">Perfil</a>
+                <a href="/principal" onClick={handleClick}>Cerrar Sesión</a>
+            </nav>
+        </header>
 
-      {/** <form action="#" className="search-bar">
-      <input type="text" placeholder='Buscar...' />
-      <button type='submit'><i className='bx bx-search-alt-2'></i></button>
-  </form> */}
-
-    </header>
-  )
+    )
 }
 
-export default Header;
+export default BarraMenu;

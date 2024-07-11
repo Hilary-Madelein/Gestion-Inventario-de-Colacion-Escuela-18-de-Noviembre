@@ -59,7 +59,7 @@ body {
 .background {
     width: 100%;
     height: 100vh;
-    background: #FFFFEC;
+    background: url('../img/fondo2.png') no-repeat;
     background-size: cover;
     background-position: center;
     filter: blur(4px);
@@ -72,7 +72,7 @@ body {
     transform: translate(-50%, -50%);
     width: 80%;
     height: 650px;
-    background: #fff;
+    background: #FFFFEC;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
@@ -150,15 +150,15 @@ body {
 }
 
 .iconEscudo {
-    width: 100px; /* Ajusta el tamaño según tus necesidades */
-    height: 120px; /* Ajusta el tamaño según tus necesidades */
+    width: 100px;
+    height: 120px; 
     margin: 0 auto;
   }
   
   .iconEscudo img {
     width: 100px;
     height: 100px;
-    object-fit: contain; /* Asegura que la imagen mantenga su proporción */
+    object-fit: contain; 
   }
   
 
@@ -204,14 +204,14 @@ body {
 }
 
 .content .text {
-    font-size: 35px;
+    font-size: 25px;
     margin: 5px 0;
     font-weight: bold;
 }
 
 .textoBienve {
-    font-size: 30px;
-    line-height: 1;
+    font-size: 45px;
+    line-height: 5;
     font-weight: bold;
 
 }
@@ -256,7 +256,7 @@ body {
 
 /*RESPONSIVIDAD*/
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
     .container1 {
         position: center;
         width: 100%;
@@ -273,6 +273,46 @@ body {
         width: 100%;
         position: center;
         height: 60vh;
+    }
+
+    .textoBienve {
+        font-size: 25px;
+        line-height: 1;
+        font-weight: bold;
+    
+    }
+
+    .form-box {
+        justify-content: center;
+        height: auto;
+    }
+
+    .input-box {
+        width: 90%;
+    }
+
+    .form-box h2 {
+        font-size: 24px;
+    }
+
+    .background {
+        display: block;
+    }
+}
+
+@media (max-width: 1500px) {
+
+    .content .text {
+        font-size: 20px;
+        margin: 5px 0;
+        font-weight: bold;
+    }
+
+    .textoBienve {
+        font-size: 35px;
+        line-height: 2;
+        font-weight: bold;
+    
     }
 
     .form-box {

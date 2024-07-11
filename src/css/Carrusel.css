@@ -1,0 +1,15 @@
+.foto {
+    width: 500%; /* Ajustar al ancho del contenedor */
+    height: 500%; /* Ajustar al alto del contenedor */
+    object-fit: cover; /* Ajustar la imagen para cubrir el contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .foto img {
+    width: 1000px;
+    height: 500px;
+    object-fit: contain; /* Mantener proporciones de la imagen */
+  }
+  

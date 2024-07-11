@@ -3,6 +3,8 @@ import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { estaSesion, getRol } from './utils/SessionUtil';
 import Login from './fragments/Login';
+import SideBar from './fragments/Sidebar';
+import Dashboard from './fragments/Dashboard';
 
 function App() {
   const MiddewareSesion = ({ children }) => {
@@ -27,14 +29,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/login' element={<Login />} />
-
-        {/* Ruta para cuando el usuario está autenticado */}
+        <Route path='/bar' element={<SideBar />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/principalusuario' element={<MiddewareSesion><div>Principal Usuario</div></MiddewareSesion>} />
-
-        {/* Ruta para cuando el usuario tiene el rol ADMINISTRADOR */}
         <Route path='/admin' element={<MiddewareRol><div>Admin Page</div></MiddewareRol>} />
-
-        {/* Ruta para cualquier URL no definida */}
         <Route path='*' element={<Navigate to='/login' />} />
       </Routes>
     </div>

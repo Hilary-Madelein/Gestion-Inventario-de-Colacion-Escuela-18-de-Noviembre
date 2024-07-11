@@ -59,12 +59,12 @@ const Login = ({ onLogin }) => {
 
             <div className='container1'>
                 <div className='content'>
-                    <h2 className='text'>API RADIACIÓN ULTRAVIOLETA</h2>
+                    <h2 className='text'>ESCUELA DE EDUCACIÓN BÁSICA "18 DE NOVIEMBRE"</h2>
                     <div className='text-sci'>
-                        <h2 className='textoBienve'>Bienvenido! <br /> <span className='parrafoInfo'>A un enfoque más consciente de la exposición solar en Loja</span></h2>
-                        <p className='parrafo'> Nuestra plataforma ha sido diseñada pensando en personas que buscan acceder
-                            a información valiosa sobre los niveles de radiación UV en fechas pasadas. Con nuestra API, ahora es
-                            posible explorar y utilizar datos detallados de radiación UV históricos, esta proporcionará acceso a una fuente confiable y completa de información. </p>
+                        <h2 className='textoBienve'>Sistema de Gestión de Colación <br /></h2>
+                        <p className='parrafo'> ¡Bienvenido a nuestra plataforma de gestión de inventarios! Nuestra herramienta te permite supervisar y manejar los productos de manera eficiente. 
+                        Aquí puedes mantener el control de los niveles de stock y asegurar una distribución adecuada. Nos enfocamos en simplificar tu trabajo diario para que puedas dedicar 
+                        más tiempo a lo que realmente importa: el bienestar de tus estudiantes. </p>
 
                     </div>
                 </div>
