@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import '../css/Dashboard.css';
-import '../css/Sidebar.css'
-import 'boxicons';
-import { UilEstate } from "@iconscout/react-unicons";
-import {UilSignOutAlt} from "@iconscout/react-unicons";
+import '../css/Sidebar.css';
+import {
+    UilSignOutAlt,
+} from "@iconscout/react-unicons";
 import { SidebarData } from '../Data/Data';
 import Logo from '../img/logoNutriLog.png';
 
@@ -15,8 +15,8 @@ const SideBar = () => {
             {/* logo */}
             <div className="logo">
                 <img src={Logo} alt="Logo app" />
-                <span>
-                    Sh<span>o</span>ps
+                <span className="titulo">
+                    <span className='titulo2'>NutriLog</span>
                 </span>
             </div>
 
@@ -24,8 +24,11 @@ const SideBar = () => {
             <div className="menu">
                 {SidebarData.map((item, index) => {
                     return (
-                        <div key={index} className={selected === index ? 'menuItem active' : 'menuItem'}
-                            onClick={() => setSelected(index)}>
+                        <div
+                            key={index}
+                            className={selected === index ? 'menuItem active' : 'menuItem'}
+                            onClick={() => setSelected(index)}
+                        >
                             <item.icon />
                             <span>{item.heading}</span>
                         </div>
@@ -41,7 +44,7 @@ const SideBar = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default SideBar;

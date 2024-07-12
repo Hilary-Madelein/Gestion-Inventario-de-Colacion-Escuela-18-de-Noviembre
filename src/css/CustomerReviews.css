@@ -1,0 +1,14 @@
+.CustomerReview{
+    width: 100%;
+    background: var(--green);
+    border-radius: 0.7rem;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+}
+
+.CustomerReview h3{
+    padding-top: 10px;
+    color: var(--white);
+}

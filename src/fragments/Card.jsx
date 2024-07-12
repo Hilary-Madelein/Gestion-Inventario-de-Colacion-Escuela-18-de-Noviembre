@@ -24,7 +24,9 @@ const Card = (props) => {
 function CompactCard({ param, setExpanded }) {
     const Png = param.png;
     return (
-        <motion.div className="CompactCard" layoutId={`expandableCard-${param.title}`}
+        <motion.div
+            className="CompactCard"
+            layoutId={`expandableCard-${param.title}`}
             style={{
                 background: param.color.backGround,
                 boxShadow: param.color.boxShadow
@@ -43,9 +45,9 @@ function CompactCard({ param, setExpanded }) {
             <div className="detail">
                 <Png />
                 <span>
-                    ${param.value}
+                    {param.value}
                     <span>
-                        Last 24 hours
+                        24 hours
                     </span>
                 </span>
             </div>
@@ -70,15 +72,16 @@ function ExpandedCard({ param, setExpanded }) {
                 opacity: 0.35
             },
             fill: {
-                colors: ['#fff'],
-                type: 'gradient'
+                type: 'solid', 
+                colors: ["#F5F7F8"],
+
             },
             dataLabels: {
                 enabled: false,
             },
             stroke: {
                 curve: 'smooth',
-                colors: ["white"],
+                colors: ["#fff"],
             },
             tooltip: {
                 x: {
@@ -99,12 +102,45 @@ function ExpandedCard({ param, setExpanded }) {
                     '2019-09-19T05:30:00.000Z',
                     '2019-09-19T06:30:00.000Z',
                 ],
+                labels: {
+                    style: {
+                        colors: '#fff', // Color de las etiquetas del eje X
+                    }
+                },
+                axisBorder: {
+                    show: true,
+                    color: '#fff', // Color de la línea del eje X
+                },
+                axisTicks: {
+                    show: true,
+                    color: '#fff' // Color de las marcas del eje X
+                },
             },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: '#fff', // Color de las etiquetas del eje Y
+                    }
+                },
+                axisBorder: {
+                    show: true,
+                    color: '#fff', // Color de la línea del eje Y
+                },
+                axisTicks: {
+                    show: true,
+                    color: '#fff' // Color de las marcas del eje Y
+                },
+            }
         },
+        series: [{
+            name: 'Series 1',
+            data: [30, 40, 35, 50, 49, 60, 70]
+        }]
     };
 
     return (
-        <motion.div className="ExpandedCard"
+        <motion.div
+            className="ExpandedCard"
             style={{ background: param.color.backGround, boxShadow: param.color.boxShadow }}
             layoutId={`expandableCard-${param.title}`}
         >
@@ -118,7 +154,7 @@ function ExpandedCard({ param, setExpanded }) {
                 <Chart series={param.series} type='area' options={data.options} />
             </div>
             <span>
-                Last 24 hours
+                24 hours
             </span>
         </motion.div>
     );

@@ -1,21 +1,26 @@
 import React from "react";
 import '../css/Updates.css';
+import { UpdatesData } from "../Data/Data";
 
 const Updates = () => {
     return (
         <div className="Updates">
-           <div>
-            <h3>Updates</h3>
-            <Updates/>
-           </div>
-
-           <div>
-                <h3>Customer Review</h3>
-           </div>
-
+            <h3>Datos de la Bodega</h3>
+            {UpdatesData.map((update) => {
+                return (
+                    <div className="update">
+                        <div className="noti">
+                            <div style={{ marginBottom: '0.5rem'}}>
+                                <span>{update.name}</span>
+                                <span> {update.noti}</span>
+                            </div>
+                            <span>{update.time}</span>
+                        </div>
+                    </div>
+                );
+            })}
         </div>
-
-    )
+    );
 }
 
 export default Updates;

@@ -10,32 +10,32 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 const columns = [
-    { id: 'name', label: 'Name', minWidth: 170 },
-    { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+    { id: 'name', label: 'Nombre', minWidth: 170 },
+    { id: 'code', label: 'Código', minWidth: 100 },
     {
         id: 'population',
-        label: 'Population',
+        label: 'Stock',
         minWidth: 170,
         align: 'left',
         format: (value) => value.toLocaleString('en-US'),
     },
     {
         id: 'size',
-        label: 'Size\u00a0(km\u00b2)',
+        label: 'Fecha de caducidad',
         minWidth: 170,
         align: 'left',
         format: (value) => value.toLocaleString('en-US'),
     },
     {
         id: 'density',
-        label: 'Density',
+        label: 'Lote',
         minWidth: 170,
         align: 'left',
         format: (value) => value.toFixed(2),
     },
     {
         id: 'status',
-        label: 'Status',
+        label: 'Estado',
         minWidth: 170,
         align: 'left',
     },
@@ -47,21 +47,21 @@ function createData(name, code, population, size, status) {
 }
 
 const rows = [
-    createData('India', 'IN', 1324171354, 3287263, 'Active'),
-    createData('China', 'CN', 1403500365, 9596961, 'Inactive'),
-    createData('Italy', 'IT', 60483973, 301340, 'Active'),
-    createData('United States', 'US', 327167434, 9833520, 'Inactive'),
-    createData('Canada', 'CA', 37602103, 9984670, 'Active'),
-    createData('Australia', 'AU', 25475400, 7692024, 'Active'),
-    createData('Germany', 'DE', 83019200, 357578, 'Inactive'),
-    createData('Ireland', 'IE', 4857000, 70273, 'Active'),
-    createData('Mexico', 'MX', 126577691, 1972550, 'Active'),
-    createData('Japan', 'JP', 126317000, 377973, 'Inactive'),
-    createData('France', 'FR', 67022000, 640679, 'Active'),
-    createData('United Kingdom', 'GB', 67545757, 242495, 'Inactive'),
-    createData('Russia', 'RU', 146793744, 17098246, 'Active'),
-    createData('Nigeria', 'NG', 200962417, 923768, 'Inactive'),
-    createData('Brazil', 'BR', 210147125, 8515767, 'Active'),
+    createData('Producto 1', 'IN', 1324171354, 3287263, 'Active'),
+    createData('Producto 2', 'CN', 1403500365, 9596961, 'Inactive'),
+    createData('Producto 3', 'IT', 60483973, 301340, 'Active'),
+    createData('Producto 4', 'US', 327167434, 9833520, 'Inactive'),
+    createData('Producto 5', 'CA', 37602103, 9984670, 'Active'),
+    createData('Producto 6', 'AU', 25475400, 7692024, 'Active'),
+    createData('Producto 7', 'DE', 83019200, 357578, 'Inactive'),
+    createData('Producto 8', 'IE', 4857000, 70273, 'Active'),
+    createData('Producto 9', 'MX', 126577691, 1972550, 'Active'),
+    createData('Producto 10', 'JP', 126317000, 377973, 'Inactive'),
+    createData('Producto 11', 'FR', 67022000, 640679, 'Active'),
+    createData('Producto 12', 'GB', 67545757, 242495, 'Inactive'),
+    createData('Producto 13', 'RU', 146793744, 17098246, 'Active'),
+    createData('Producto 14', 'NG', 200962417, 923768, 'Inactive'),
+    createData('Producto 15', 'BR', 210147125, 8515767, 'Active'),
 ];
 
 const TableData = () => {
@@ -82,7 +82,7 @@ const TableData = () => {
             case 'Active':
                 return { backgroundColor: '#d4edda', color: '#155724', padding: '0.3rem 0.5rem', borderRadius: '0.25rem' };
             case 'Inactive':
-                return { backgroundColor: '#f8d7da', color: '#721c24', padding: '0.3rem 0.5rem', borderRadius: '0.25rem' };
+                return { backgroundColor: '#e6e6e6', color: '#000', padding: '0.3rem 0.5rem', borderRadius: '0.25rem' };
             default:
                 return {};
         }
@@ -90,10 +90,10 @@ const TableData = () => {
 
     return (
         <div className="TableData">
-            <h3>Recent Orders</h3>
+            <h3>Tabla de Productos</h3>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+                <TableContainer sx={{ maxHeight: 550 }}>
                     <MuiTable stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>

@@ -16,7 +16,7 @@ const BarraMenu = () => {
 
     return (
         <header className='header1'>
-            <a href="/principalusuario" className="logo">NOMBRE APP</a>
+            <span className='nombreApp'>NutriLog</span>
 
             <input type="checkbox" id='check' />
             <label htmlFor="check" className='icons1'>
