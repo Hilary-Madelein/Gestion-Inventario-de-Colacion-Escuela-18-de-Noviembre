@@ -18,15 +18,15 @@ const CustomerReview = () => {
       },
 
       fill: {
-        colors: ["#fff"],
-        type: "solid",
+        colors: ["#12372A"],
+        type: "gradient",
       },
       dataLabels: {
         enabled: false,
       },
       stroke: {
         curve: "smooth",
-        colors: ["#fff"],
+        colors: ["#12372A"],
       },
       tooltip: {
         x: {

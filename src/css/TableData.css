@@ -1,5 +1,23 @@
+.TableData {
+  height: auto; /* Ajustar automáticamente al contenido */
+  max-height: 600px; /* Altura máxima para que no sea tan alta */
+  width: 100%;
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 2%; /* Ajuste del relleno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra */
+  border: 1px solid #ffffff; /* Borde resaltado */
+  border-radius: 0.7rem; /* Bordes redondeados */
+  margin-top: 1rem; /* Espacio superior para separar del título */
+}
+
+.TableData > h3 {
+  color: var(--green);
+  padding-bottom: 1%;
+  text-align: left;
+}
+
 .MuiTableRow-root>* {
-  padding: 10px;
+  padding: 5px;
 }
 
 .MuiTableRow-root.MuiTableRow-head>* {
@@ -26,18 +44,6 @@
   color: #6a6a6a;
   padding: 0.3rem 0.5rem;
   border-radius: 0.25rem;
-}
-
-.TableData{
-  border: #155724;
-  padding-top: 3%;
-  padding-bottom: 3%;
-}
-
-.TableData > h3 {
-  color: var(--green);
-  padding-bottom: 1%;
-  text-align: left;
 }
 
 @media screen and (max-width: 1200px) {

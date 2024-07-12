@@ -14,7 +14,10 @@ const Dashboard = () => {
         <div className="MainDash">
           <h1>Dashboard</h1>
           <Card />
-          <TableData />
+          <div className="tabla">
+            <TableData />
+          </div>
+
         </div>
         <RightSide />
       </div>

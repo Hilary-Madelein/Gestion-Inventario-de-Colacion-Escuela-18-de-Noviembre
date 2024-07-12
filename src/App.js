@@ -3,8 +3,8 @@ import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { estaSesion, getRol } from './utils/SessionUtil';
 import Login from './fragments/Login';
-import SideBar from './fragments/Sidebar';
 import Dashboard from './fragments/Dashboard';
+import Productos from './fragments/Productos';
 
 function App() {
   const MiddewareSesion = ({ children }) => {
@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/login' element={<Login />} />
-        <Route path='/bar' element={<SideBar />} />
+        <Route path='/productos' element={<Productos />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/principalusuario' element={<MiddewareSesion><div>Principal Usuario</div></MiddewareSesion>} />
         <Route path='/admin' element={<MiddewareRol><div>Admin Page</div></MiddewareRol>} />

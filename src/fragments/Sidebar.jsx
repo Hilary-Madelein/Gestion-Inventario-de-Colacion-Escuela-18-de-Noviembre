@@ -6,9 +6,11 @@ import {
 } from "@iconscout/react-unicons";
 import { SidebarData } from '../Data/Data';
 import Logo from '../img/logoNutriLog.png';
+import { useNavigate } from 'react-router-dom';
 
 const SideBar = () => {
     const [selected, setSelected] = useState(0);
+    const navigate = useNavigate();
 
     return (
         <div className="Sidebar">
@@ -27,7 +29,10 @@ const SideBar = () => {
                         <div
                             key={index}
                             className={selected === index ? 'menuItem active' : 'menuItem'}
-                            onClick={() => setSelected(index)}
+                            onClick={() => {
+                                setSelected(index);
+                                navigate(item.route);
+                            }}
                         >
                             <item.icon />
                             <span>{item.heading}</span>

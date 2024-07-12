@@ -1,6 +1,5 @@
 .CustomerReview{
     width: 100%;
-    background: var(--green);
     border-radius: 0.7rem;
     gap: 1rem;
     display: flex;
@@ -8,7 +7,20 @@
     font-size: 13px;
 }
 
+.CustomerReview {
+    height: auto; /* Ajustar automáticamente al contenido */
+    max-height: 600px; /* Altura máxima para que no sea tan alta */
+    width: 100%;
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 2%; /* Ajuste del relleno */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra */
+    border: 1px solid #ffffff; /* Borde resaltado */
+    border-radius: 0.7rem; /* Bordes redondeados */
+    margin-top: 1rem; /* Espacio superior para separar del título */
+}
+
 .CustomerReview h3{
     padding-top: 10px;
-    color: var(--white);
+    color: var(--green);
+    text-align: left;
 }

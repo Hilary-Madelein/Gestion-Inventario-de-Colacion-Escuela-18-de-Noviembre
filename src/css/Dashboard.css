@@ -24,11 +24,15 @@
   display: grid;
   height: 100%;
   width: 100%;
-  background: var(--yellow);
+  background: var(--gray);
   gap: 16px;
   grid-template-columns: 11rem auto 20rem;
   overflow: hidden;
   box-shadow: var(--boxShadow);
+}
+
+.tabla{
+  width: 100%;
 }
 
 @media screen and (max-width: 1200px) {

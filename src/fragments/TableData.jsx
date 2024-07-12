@@ -93,7 +93,7 @@ const TableData = () => {
             <h3>Tabla de Productos</h3>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 550 }}>
+                <TableContainer sx={{ maxHeight: 400 }}>
                     <MuiTable stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
