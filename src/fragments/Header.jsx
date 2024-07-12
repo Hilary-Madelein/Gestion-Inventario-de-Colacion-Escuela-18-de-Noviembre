@@ -1,5 +1,5 @@
 import { borrarSesion } from '../utils/SessionUtil';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { getRol } from '../utils/SessionUtil';
 import '../css/Header.css';
 import 'boxicons';
