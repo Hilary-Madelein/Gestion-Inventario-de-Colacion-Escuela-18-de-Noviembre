@@ -5,18 +5,18 @@ import CustomerReview from "./CustomerReview";
 
 const RightSide = () => {
     return (
+        <div className="RightSide">
+           <div>
+            <Updates/>
+           </div>
 
-            <div className="RightSide">
-                <div className="prueba">
-                    
-                    <Updates/>
-                </div>
-                <div>
-                    
-                    <CustomerReview/>
-                </div>
-            </div>
-    );
-};
+           <div>
+                <CustomerReview/>
+           </div>
+
+        </div>
+
+    )
+}
 
 export default RightSide;

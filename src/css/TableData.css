@@ -61,4 +61,38 @@
     align-items: center;
     width: 23rem;
   }
+
+.MuiTableRow-root>*{
+    padding: 10px;
+
+}
+
+.MuiTableRow-root.MuiTableRow-head>*{
+    font-weight: bold !important;
+
+}
+
+.Table td, th{
+    border: none!important;
+}
+
+.Table:first-child{
+    border-radius: 0.7rem !important;
+}
+
+/* TableData.css */
+
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.status-inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.25rem;
+}
 }
