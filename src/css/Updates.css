@@ -1,35 +1,52 @@
 .updateData {
+    display: flex;
+    flex-direction: column; /* Organiza los hijos en una columna */
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
     height: auto; /* Ajustar automáticamente al contenido */
     max-height: 600px; /* Altura máxima para que no sea tan alta */
-    width: 100%;
+    width: 100%; /* Ajusta según sea necesario, prueba también con un ancho fijo si es necesario */
     background-color: #ffffff; /* Fondo blanco */
     padding: 2%; /* Ajuste del relleno */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra */
     border: 1px solid #ffffff; /* Borde resaltado */
-    border-radius: 0.7rem; /* Bordes redondeados */
+    border-radius: 0.4rem; /* Bordes redondeados */
     margin-top: 5rem; /* Espacio superior para separar del título */
+    margin-left: auto; /* Centra horizontalmente */
+    margin-right: auto; /* Centra horizontalmente */
 }
 
-.updateData h3{
+.updateData h3 {
     color: var(--green);
     padding-bottom: 5%;
-    text-align: left;
+    padding-left: 2%;
+    text-align: left; 
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 5%;
+    width: 100%; 
 }
 
 .Updates {
-    width: 100%;
     display: flex;
     flex-direction: column; /* Organizar en filas */
     gap: 1rem; /* Espacio entre las filas */
+    align-items: center; /* Centra horizontalmente */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
 }
 
 .row {
     display: flex; /* Organizar elementos en una fila */
+    justify-content: center; /* Centrar los elementos horizontalmente */
+    align-items: center; /* Centrar los elementos verticalmente */
     gap: 1rem; /* Espacio entre los elementos */
     background: #436850;
-    border-radius: 0.7rem;
+    border-radius: 0.2rem;
     padding: 1rem;
     font-size: 13px;
+    width: 250px; /* Ancho fijo para cada fila */
+    margin-left: auto; /* Centra horizontalmente */
+    margin-right: auto; /* Centra horizontalmente */
 }
 
 .update {
@@ -38,20 +55,20 @@
     flex: 1; /* Para que cada update ocupe el mismo espacio */
 }
 
-.update>img {
+.update > img {
     width: 3.2rem;
     height: 3.2rem;
 }
 
-.noti>div>span:nth-of-type(1) {
+.noti > div > span:nth-of-type(1) {
     font-weight: bold;
     color: var(--white);
 }
 
-.noti>div>span:nth-of-type(2) {
+.noti > div > span:nth-of-type(2) {
     color: var(--white);
 }
 
-.noti>span:nth-of-type(1) {
+.noti > span:nth-of-type(1) {
     color: var(--white);
 }

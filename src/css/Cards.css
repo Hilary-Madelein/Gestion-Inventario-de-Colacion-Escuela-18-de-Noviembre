@@ -17,7 +17,7 @@
   /* Sombra */
   border: 1px solid #ffffff;
   /* Borde resaltado */
-  border-radius: 0.7rem;
+  border-radius: 0.4rem;
   /* Bordes redondeados */
   margin-top: 1rem;
   /* Espacio superior para separar del título */
@@ -27,6 +27,8 @@
   color: var(--green);
   text-align: left;
   padding-bottom: 1%;
+  font-weight: bolder;
+  font-size: 20px;
 }
 
 .parentContainer {

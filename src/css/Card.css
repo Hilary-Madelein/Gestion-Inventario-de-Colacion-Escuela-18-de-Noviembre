@@ -2,7 +2,7 @@
     display: flex;
     flex: 1;
     height: 9rem !important;
-    border-radius: 0.7rem;
+    border-radius: 0.4rem;
     color: white;
     position: relative;
     cursor: pointer;
@@ -98,6 +98,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
+    border-radius: 0.4rem;
 
 }
 

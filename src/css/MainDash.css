@@ -8,7 +8,9 @@
 }
 
 .MainDash > h1 {
-  color: var(--green);
+  color: var(--green); 
+  font-weight: bold;
+  padding-left: 15%;
 }
 
 .RightSide {

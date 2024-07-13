@@ -1,5 +1,4 @@
 .Productos {
-    font-family: "Poppins", sans-serif;
     width: 100%;
     background: var(--gray);
     overflow: auto; /* Activar el scroll de la ventana */
@@ -26,6 +25,7 @@
 .Productos-header h1 {
     color: var(--green);
     margin: 0;
+    font-weight: bold;
 }
 
 .addButton {
@@ -42,7 +42,7 @@
     padding: 2%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     border: 1px solid #ffffff;
-    border-radius: 0.7rem;
+    border-radius: 0.2rem;
     margin-top: 1rem;
 }
 

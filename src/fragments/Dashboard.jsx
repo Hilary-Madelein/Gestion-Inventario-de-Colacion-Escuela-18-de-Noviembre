@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import Card from "./Cards";
 import TableData from "./TableData";
 import '../css/MainDash.css';
+import '../css/global.css';
 import RightSide from './RightSide';
 
 const Dashboard = () => {

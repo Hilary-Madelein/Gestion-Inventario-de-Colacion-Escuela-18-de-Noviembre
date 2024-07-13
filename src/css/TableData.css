@@ -6,7 +6,7 @@
   padding: 2%; /* Ajuste del relleno */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Sombra */
   border: 1px solid #ffffff; /* Borde resaltado */
-  border-radius: 0.7rem; /* Bordes redondeados */
+  border-radius: 0.4rem; /* Bordes redondeados */
   margin-top: 1rem; /* Espacio superior para separar del título */
 }
 
@@ -14,6 +14,8 @@
   color: var(--green);
   padding-bottom: 1%;
   text-align: left;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .MuiTableRow-root>* {

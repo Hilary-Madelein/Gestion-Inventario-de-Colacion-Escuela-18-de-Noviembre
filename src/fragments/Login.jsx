@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../css/Login.css';
 import '../css/Header.css';
+import '../css/global.css';
 import 'boxicons';
 import Header from './Header';
 //import { InicioSesion, obtener } from '../hooks/Conexion'
