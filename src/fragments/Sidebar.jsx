@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Dashboard.css';
 import '../css/Sidebar.css';
-import {
-    UilSignOutAlt,
-} from "@iconscout/react-unicons";
+import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from '../Data/Data';
 import Logo from '../img/logoNutriLog.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SideBar = () => {
-    const [selected, setSelected] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
+    const [selected, setSelected] = useState(0);
+
+    useEffect(() => {
+        const currentPath = location.pathname;
+        const currentIndex = SidebarData.findIndex(item => item.route === currentPath);
+        if (currentIndex !== -1) {
+            setSelected(currentIndex);
+        }
+    }, [location.pathname]);
 
     return (
         <div className="Sidebar">

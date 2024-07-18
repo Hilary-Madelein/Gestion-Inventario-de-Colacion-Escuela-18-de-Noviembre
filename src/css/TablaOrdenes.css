@@ -1,0 +1,68 @@
+.Ordenes {
+    display: flex;
+    height: 100vh; /* Ajuste la altura de la sección para ocupar toda la pantalla */
+    width: 100%;
+    background: var(--gray);
+}
+
+.SideBarContainer {
+    flex: 0 0 200px; /* Ajusta este valor según el ancho que desees para el sidebar */
+    background-color: var(--green); /* Ajusta según el color de fondo deseado */
+}
+
+.MainContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra las tablas horizontalmente */
+    justify-content: center; /* Centra las tablas verticalmente */
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.MainContent > h1 {
+    color: var(--green);
+    font-weight: bold;
+    padding-left: 2%;
+    padding-top: 0.5rem;
+}
+
+.TableData1 {
+    display: flex;
+    flex-grow: 1;
+    gap: 1rem;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.TableData1 > .TableContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.TableContainer > h3 {
+    color: var(--green);
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.TableContainer {
+    margin-top: 200px;
+    background-color: #ffffff;
+    padding: 2%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border: 1px solid #ffffff;
+    border-radius: 0.4rem;
+    box-sizing: border-box;
+    width: 50px;
+    height: 600px;
+}
+
+.TableContainer > .boton {
+    margin-left: 520px;
+}

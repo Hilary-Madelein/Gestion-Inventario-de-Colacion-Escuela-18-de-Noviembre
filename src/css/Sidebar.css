@@ -7,6 +7,7 @@
   height: 100%;
   background-color: var(--green);
   width: 250px;
+  height: auto;
 }
 
 .logo {
@@ -22,8 +23,8 @@
 }
 
 .logo > img {
-  width: 11rem;
-  height: 11rem;
+  width: 10rem;
+  height: 10rem;
 }
 
 .logo > span > span {
@@ -60,6 +61,7 @@
 
 .menuItem:hover {
   cursor: pointer;
+  margin-left: 1rem; 
 }
 
 .active {

@@ -11,6 +11,7 @@
   color: var(--green); 
   font-weight: bold;
   padding-left: 15%;
+  text-align: center;
 }
 
 .RightSide {
