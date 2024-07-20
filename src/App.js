@@ -10,6 +10,8 @@ import './css/global.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import DetallesProducto from './fragments/DetallesProducto';
 import Ordenes from './fragments/Ordenes';
+import Actualizar from './fragments/Actualizar';
+import Actualizar2 from './fragments/Actualizar2';
 
 function App() {
   const MiddewareSesion = ({ children }) => {
@@ -36,6 +38,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/productos' element={<Productos />} />
         <Route path='/ordenes' element={<Ordenes />} />
+        <Route path='/actualizar' element={<Actualizar />} />
+        <Route path='/actualizar2' element={<Actualizar2 />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/detalles' element={<DetallesProducto />} />
         <Route path='/registroProducto' element={<AgregarProducto />} />

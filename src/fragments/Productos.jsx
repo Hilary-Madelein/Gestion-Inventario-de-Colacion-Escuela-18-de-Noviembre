@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Productos.css';
 import '../css/global.css';
 import Sidebar from './Sidebar';
@@ -8,12 +8,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import productoPrueba from '../img/productoPrueba.jpg';
 import AgregarProducto from './AgregarProducto';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from 'react-bootstrap';
 import EditarProducto from './EditarProducto';
 import DeatallesProducto from './DetallesProducto';
+import { useNavigate } from 'react-router-dom';
+import { borrarSesion, getToken } from '../utils/SessionUtil';
+import mensajes from '../utils/Mensajes';
+import { ObtenerGet, URLBASE } from '../hooks/Conexion';
 
 const Productos = () => {
 
@@ -25,12 +28,42 @@ const Productos = () => {
     //SHOW EDITAR
     const [showEdit, setShowEdit] = useState(false);
     const handleCloseEdit = () => setShowEdit(false);
-    const handleShowEdit= () => setShowEdit(true);
+    const handleShowEdit = () => setShowEdit(true);
 
     //SHOW DETALLES
     const [showDetalles, setShowDetalles] = useState(false);
     const handleCloseDetalles = () => setShowDetalles(false);
     const handleShowDetalles = () => setShowDetalles(true);
+
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const info = await ObtenerGet(getToken(), 'listar/producto');
+                if (info.code !== 200) {
+                    if (info.msg === 'Acceso denegado. Token ha expirado') {
+                        mensajes(info.msg, 'error');
+                        borrarSesion();
+                        navigate("/login");
+                    } else {
+                        mensajes(info.msg, 'error');
+                    }
+                } else {
+                    setData(info.info);
+                }
+            } catch (error) {
+                mensajes("Error al cargar los datos: " + error.message, 'error');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [navigate]);
+    
 
     return (
         <div className="Productos">
@@ -44,36 +77,43 @@ const Productos = () => {
                                 <path fillRule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5" />
                                 <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z" />
                             </svg>
-                            <span style={{ marginLeft: '8px',fontWeight:'bold' }}>Agregar Producto</span>
+                            <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>Agregar Producto</span>
                         </Button>
                     </div>
 
                 </div>
                 <div className="Productos-content">
                     <h2>Productos Disponibles</h2>
-                    <div className="CardContainer">
-                        {[...Array(11)].map((_, index) => (
-                            <Card key={index} sx={{ maxWidth: 200, margin: 2 }}>
-                                <CardMedia
-                                    sx={{ height: 150 }}
-                                    image={productoPrueba}
-                                    title="Producto prueba"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h6" component="div">
-                                        Producto {index + 1}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Descripción del producto {index + 1}.
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" style={{color: 'var(--green)'}} onClick={handleShowEdit}>Editar</Button>
-                                    <Button size="small" style={{color: 'var(--green)'}} onClick={handleShowDetalles}>Mas detalles</Button>
-                                </CardActions>
-                            </Card>
-                        ))}
-                    </div>
+                    {loading ? (
+                        <p>Cargando productos...</p>
+                    ) : (
+                        <div className="CardContainer">
+                            {data.map((producto, index) => (
+                                <Card key={producto.id || index} sx={{ maxWidth: 200, margin: 2 }}>
+                                    <CardMedia
+                                        sx={{ height: 150 }}
+                                        image={producto.photo ? `${URLBASE}/images/products/${producto.photo}` : '/images/default.jpg'}                                         title={producto.name}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h6" component="div">
+                                            {producto.name}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {producto.category}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button size="small" style={{ color: 'var(--green)' }} onClick={handleShowEdit}>
+                                            Editar
+                                        </Button>
+                                        <Button size="small" style={{ color: 'var(--green)' }} onClick={handleShowDetalles}>
+                                            Más detalles
+                                        </Button>
+                                    </CardActions>
+                                </Card>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
             {/* < VENTANA MODAL AGREGAR> */}
@@ -84,7 +124,7 @@ const Productos = () => {
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header style={{background: 'var(--green)'}}>
+                    <Modal.Header style={{ background: 'var(--green)' }}>
                         <Modal.Title style={{ fontWeight: 'bold', color: 'var(--white)' }}>Agregar producto
                         </Modal.Title>
                     </Modal.Header>
@@ -93,7 +133,7 @@ const Productos = () => {
 
                     </Modal.Body>
 
-                    <Modal.Footer style={{background: 'var(--green)'}}>
+                    <Modal.Footer style={{ background: 'var(--green)' }}>
                         <Button variant="secondary" onClick={() => { handleClose(); }} style={{ fontWeight: 'bold', color: 'var(--white)' }}>
                             Cerrar
                         </Button>
@@ -111,7 +151,7 @@ const Productos = () => {
                     style={{ '--bs-modal-width': '75%' }}
                     keyboard={false}
                 >
-                    <Modal.Header style={{background: 'var(--green)'}}>
+                    <Modal.Header style={{ background: 'var(--green)' }}>
                         <Modal.Title style={{ fontWeight: 'bold', color: 'var(--white)' }}>Detalles producto
                         </Modal.Title>
                     </Modal.Header>
@@ -120,7 +160,7 @@ const Productos = () => {
 
                     </Modal.Body>
 
-                    <Modal.Footer style={{background: 'var(--green)'}}>
+                    <Modal.Footer style={{ background: 'var(--green)' }}>
                         <Button variant="secondary" onClick={() => { handleCloseDetalles(); }} style={{ fontWeight: 'bold', color: 'var(--white)' }}>
                             Cerrar
                         </Button>
@@ -137,7 +177,7 @@ const Productos = () => {
                     backdrop="static"
                     keyboard={false}
                 >
-                    <Modal.Header style={{background: 'var(--green)'}}>
+                    <Modal.Header style={{ background: 'var(--green)' }}>
                         <Modal.Title style={{ fontWeight: 'bold', color: 'var(--white)' }}>Editar producto
                         </Modal.Title>
                     </Modal.Header>
@@ -146,7 +186,7 @@ const Productos = () => {
 
                     </Modal.Body>
 
-                    <Modal.Footer style={{background: 'var(--green)'}}>
+                    <Modal.Footer style={{ background: 'var(--green)' }}>
                         <Button variant="secondary" onClick={() => { handleCloseEdit(); }} style={{ fontWeight: 'bold', color: 'var(--white)' }}>
                             Cerrar
                         </Button>

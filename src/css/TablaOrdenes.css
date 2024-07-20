@@ -66,3 +66,39 @@
 .TableContainer > .boton {
     margin-left: 520px;
 }
+
+/* Estilos para el contenedor de stock */
+.stock {
+    background-color: var(--white);
+    border: 2px solid var(--white); /* Cambia '--green' por el color que prefieras */
+    padding: 20px;
+    margin-left: 20px; /* Ajusta este margen para controlar la separación */
+    margin-top: 90px;
+    margin-right: 430px;
+    border-radius: 6px;
+    width: 400px; /* Ajusta según necesidades */
+    text-align: center;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para resaltar */
+    position: absolute; /* Posición relativa al contenedor padre */
+    right: 0; /* Alineado a la derecha */
+    top: 0; /* Alineado arriba, ajusta según necesidades */
+}
+
+/* Estilo para el título del stock */
+.stock h2 {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--green); /* Cambia '--green' por el color que prefieras */
+    font-size: 22px;
+}
+
+.stock span{
+    font-weight: bold;
+    font-size: 30px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: var(--green); 
+}
+
+/* Añadir más estilos según necesidades */
+
