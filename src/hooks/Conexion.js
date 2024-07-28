@@ -36,16 +36,27 @@ export const ObtenerPost = async (key, url, bodyData) => {
         "X-API-TOKEN": key
     };
 
-    console.log("eee", bodyData);
-
     try {
         const response = await fetch(`${URL}/${url}`, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(bodyData)
         });
-        const datos = await response.json();
-        console.log("wwww", datos);
+
+        // Verificar si la respuesta es JSON válida
+        const text = await response.text();
+        let datos;
+
+        try {
+            datos = JSON.parse(text);
+        } catch (error) {
+            throw new Error(`La respuesta no es un JSON válido: ${text}`);
+        }
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText} - ${datos.msg || ''}`);
+        }
+
         return datos;
 
     } catch (error) {

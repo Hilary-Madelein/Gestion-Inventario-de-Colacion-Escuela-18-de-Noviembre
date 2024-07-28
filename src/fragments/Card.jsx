@@ -1,53 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../css/Card.css';
 import { LayoutGroup, motion } from "framer-motion";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { UilTimes } from "@iconscout/react-unicons";
 import Chart from 'react-apexcharts';
+import { borrarSesion, getToken } from '../utils/SessionUtil';
+import mensajes from '../utils/Mensajes';
+import { ObtenerPost } from '../hooks/Conexion';
+import { useNavigate } from 'react-router-dom';
 
-const Card = (props) => {
+const Card = ({ param, title, barValue, value, color, png, series }) => {
+    const navigate = useNavigate();
     const [expanded, setExpanded] = useState(false);
 
     return (
         <LayoutGroup>
             {expanded ? (
-                <ExpandedCard param={props} setExpanded={() => setExpanded(false)} />
+                <ExpandedCard param={param} setExpanded={() => setExpanded(false)} />
             ) : (
-                <CompactCard param={props} setExpanded={() => setExpanded(true)} />
+                <CompactCard param={param} setExpanded={() => setExpanded(true)} title={title} barValue={barValue} value={value} color={color} png={png} />
             )}
         </LayoutGroup>
     );
 };
 
 // CompactCard
-function CompactCard({ param, setExpanded }) {
-    const Png = param.png;
+function CompactCard({ param, setExpanded, bodegaData, title, barValue, value, color, png: Png }) {
     return (
         <motion.div
             className="CompactCard"
-            layoutId={`expandableCard-${param.title}`}
+            layoutId={`expandableCard-${title}`}
             style={{
-                background: param.color.backGround,
-                boxShadow: param.color.boxShadow
+                background: color.backGround,
+                boxShadow: color.boxShadow
             }}
             onClick={setExpanded}
         >
             <div className="radialBar">
                 <CircularProgressbar
-                    value={param.barValue}
-                    text={`${param.barValue}%`}
+                    value={barValue}
+                    text={`${barValue}%`}
                 />
                 <span className="title">
-                    {param.title}
+                    {title}
                 </span>
             </div>
             <div className="detail">
                 <Png />
                 <span>
-                    {param.value}
+                    {value}
                     <span>
-                        24 hours
+                        Existencia
                     </span>
                 </span>
             </div>
