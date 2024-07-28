@@ -12,12 +12,12 @@ function AgregarEntrada() {
 
     const onSubmit = (data) => {
         var datos = {
-            "external_kardex": "a1768f31-fc59-46bf-b49a-cfa814b02fdb",
+            "external_kardex": "a6aafe75-e685-4017-bd48-d011c99e5435",
             "quantity": parseInt(data.quantity, 10),
             "detail": data.detail,
             "movementType": "ENTRADA EXTERNA",
             "originWarehouseId": null,
-            "destinationWarehouseId": "0094193e-2149-4dbd-a075-b9ae6bbd1f79",
+            "destinationWarehouseId": "644f189d-4151-481f-92be-58b7fa7b229a",
             "code": data.code,
             "expirationDate": data.expirationDate,
             "expiryDate": data.expiryDate,
@@ -39,8 +39,8 @@ function AgregarEntrada() {
 
                 {/* INGRESAR CODIGO LOTE */}
                 <Form.Group className="mb-3">
-                    <Form.Label style={{fontWeight: 'bold'}}>Código</Form.Label>
-                    <Form.Control type="text" {...register('code', { required: 'Ingrese un código' })} placeholder="Ingrese un código" />
+                    <Form.Label style={{fontWeight: 'bold'}}>Nro. Lote</Form.Label>
+                    <Form.Control type="text" {...register('code', { required: 'Ingrese un nro' })} placeholder="Ingrese un nro" />
                     {errors.code && <div className='alert alert-danger'>{errors.code.message}</div>}
                 </Form.Group>
 
@@ -60,16 +60,18 @@ function AgregarEntrada() {
 
                 {/* INGRESAR FECHA CADUCIDAD Y FECHA DE ELABORACION */}
                 <div className="d-flex justify-content-between mb-3">
+                <Form.Group className="ms-2 flex-fill">
+                        <Form.Label style={{fontWeight: 'bold'}}>Fecha de elaboración</Form.Label>
+                        <Form.Control type="date" {...register('expiryDate', { required: true })} />
+                        {errors.expiryDate && <div className='alert alert-danger'>Ingrese una fecha de elaboración</div>}
+                    </Form.Group>
+                    
                     <Form.Group className="me-2 flex-fill">
                         <Form.Label style={{fontWeight: 'bold'}}>Fecha de expiración</Form.Label>
                         <Form.Control type="date" {...register('expirationDate', { required: true })} />
                         {errors.expirationDate && <div className='alert alert-danger'>Ingrese una fecha de expiración</div>}
                     </Form.Group>
-                    <Form.Group className="ms-2 flex-fill">
-                        <Form.Label style={{fontWeight: 'bold'}}>Fecha de elaboración</Form.Label>
-                        <Form.Control type="date" {...register('expiryDate', { required: true })} />
-                        {errors.expiryDate && <div className='alert alert-danger'>Ingrese una fecha de elaboración</div>}
-                    </Form.Group>
+                    
                 </div>
 
                 <div style={{ display: 'flex', gap: '10px', paddingTop: '10px' }}>

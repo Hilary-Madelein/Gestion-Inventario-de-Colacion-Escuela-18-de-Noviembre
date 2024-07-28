@@ -59,7 +59,7 @@ const Ordenes = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const info = await ObtenerPost(getToken(), 'obtener/entradas/items', { idKardex: 2 });
+                const info = await ObtenerPost(getToken(), 'obtener/entradas/items', { idKardex: 1 });
                 if (info.code !== 200) {
                     mensajes(info.msg, 'error');
                     if (info.msg === 'Acceso denegado. Token ha expirado') {
@@ -92,7 +92,7 @@ const Ordenes = () => {
     useEffect(() => {
         const fetchDataOut = async () => {
             try {
-                const info = await ObtenerPost(getToken(), 'obtener/salidas/items', { idKardex: 2 });
+                const info = await ObtenerPost(getToken(), 'obtener/salidas/items', { idKardex: 1});
                 if (info.code !== 200) {
                     mensajes(info.msg, 'error');
                     if (info.msg === 'Acceso denegado. Token ha expirado') {

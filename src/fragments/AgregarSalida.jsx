@@ -36,8 +36,6 @@ function AgregarEntrada() {
         fetchData();
     }, [navigate]);
 
-    console.log("ssss", loteSeleccionado);
-
     useEffect(() => {
         if (loteSeleccionado) {
             const fetchData = async () => {
@@ -64,11 +62,11 @@ function AgregarEntrada() {
 
     const onSubmit = (data) => {
         var datos = {
-            "external_kardex": "a1768f31-fc59-46bf-b49a-cfa814b02fdb",
+            "external_kardex": "a6aafe75-e685-4017-bd48-d011c99e5435",
             "quantity": parseInt(data.quantity, 10),
             "detail": data.detail,
             "movementType": "SALIDA EXTERNA",
-            "originWarehouseId": "0094193e-2149-4dbd-a075-b9ae6bbd1f79",
+            "originWarehouseId": "644f189d-4151-481f-92be-58b7fa7b229a",
             "destinationWarehouseId": null,
             "batchId": loteSeleccionado
         };
@@ -82,8 +80,6 @@ function AgregarEntrada() {
             }
         });
     };
-
-    console.log("aaa", data);
 
     return (
         <div className="wrapper">
@@ -104,7 +100,7 @@ function AgregarEntrada() {
                 {/* INGRESAR CANTIDAD */}
                 <Form.Group className="mb-3">
                     <Form.Label style={{ fontWeight: 'bold' }}>Cantidad</Form.Label>
-                    <Form.Control type="number" {...register('quantity', { required: 'Ingrese una cantidad' })} placeholder="Ingrese la cantidad" readOnly={Boolean(data.quantity)} />
+                    <Form.Control type="number" {...register('quantity', { required: 'Ingrese una cantidad' })} placeholder="Ingrese la cantidad" />
                     {errors.quantity && <div className='alert alert-danger'>{errors.quantity.message}</div>}
                 </Form.Group>
 
