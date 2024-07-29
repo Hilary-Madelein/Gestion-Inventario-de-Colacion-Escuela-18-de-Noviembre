@@ -18,7 +18,7 @@ const Dashboard = () => {
           <h1>Dashboard</h1>
           <Cards kardexId={kardex ? kardex.id : null} /> {/* Pasar el kardexId a Cards */}
           <div className="tabla">
-            <TableData />
+            <TableData kardexId={kardex ? kardex.id : null} /> {/* Pasar el kardexId a TableData */}
           </div>
         </div>
         <RightSide onKardexChange={setKardex} /> {/* Pasar setKardex como onKardexChange */}

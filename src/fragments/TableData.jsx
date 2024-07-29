@@ -26,7 +26,7 @@ function createData(nro, quantity, detail, expiryDate, expirationDate, status) {
     return { nro, quantity, detail, expiryDate, expirationDate, status };
 }
 
-const TableData = () => {
+const TableData = ({ kardexId }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [loteData, setLoteData] = useState([]);
@@ -53,8 +53,14 @@ const TableData = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!kardexId) {
+                setLoteData([]);
+                setLoading(false);
+                return;
+            }
+
             try {
-                const info = await ObtenerPost(getToken(), 'obtener/lotes/movimientos', { kardexId: 1 });
+                const info = await ObtenerPost(getToken(), 'obtener/lotes/movimientos', { kardexId });
                 if (info.code !== 200) {
                     mensajes(info.msg, 'error');
                     if (info.msg === 'Acceso denegado. Token ha expirado') {
@@ -80,7 +86,7 @@ const TableData = () => {
         };
 
         fetchData();
-    }, [navigate]);
+    }, [kardexId, navigate]);
 
     if (loading) {
         return <div>Loading...</div>;
