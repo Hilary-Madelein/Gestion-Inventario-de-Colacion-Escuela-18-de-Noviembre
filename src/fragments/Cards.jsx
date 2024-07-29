@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import '../css/Cards.css';
-import { LayoutGroup, motion } from "framer-motion";
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { UilTimes } from "@iconscout/react-unicons";
-import Chart from 'react-apexcharts';
 import { borrarSesion, getToken } from '../utils/SessionUtil';
 import mensajes from '../utils/Mensajes';
 import { ObtenerPost } from '../hooks/Conexion';
 import { useNavigate } from 'react-router-dom';
-import {  UilClipboardAlt } from "@iconscout/react-unicons";
+import { UilClipboardAlt } from "@iconscout/react-unicons";
 
-const Cards = () => {
+const Cards = ({ kardexId }) => { // Añadir kardexId prop
   const navigate = useNavigate();
-  const [bodegaData, setBodegaData] = React.useState({
+  const [bodegaData, setBodegaData] = useState({
     porcentajeStock: 0,
     porcentajeEntradas: 0,
     porcentajeSalidas: 0,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchDataOut = async () => {
+      if (!kardexId) {
+        setBodegaData({
+          porcentajeStock: 0,
+          porcentajeEntradas: 0,
+          porcentajeSalidas: 0,
+        });
+        return;
+      }
+
       try {
-        const info = await ObtenerPost(getToken(), 'obtener/porcentajes', { externalId: "644f189d-4151-481f-92be-58b7fa7b229a" });
+        const info = await ObtenerPost(getToken(), 'obtener/porcentajes', { kardexId });
 
         if (info.code !== 200) {
           mensajes(info.msg, 'error');
@@ -36,11 +40,16 @@ const Cards = () => {
         }
       } catch (error) {
         mensajes("Error al cargar los datos: " + error.message, 'error');
+        setBodegaData({
+          porcentajeStock: 0,
+          porcentajeEntradas: 0,
+          porcentajeSalidas: 0,
+        });
       }
     };
 
     fetchDataOut();
-  }, []);
+  }, [kardexId, navigate]);
 
   const cardsData = [
     {

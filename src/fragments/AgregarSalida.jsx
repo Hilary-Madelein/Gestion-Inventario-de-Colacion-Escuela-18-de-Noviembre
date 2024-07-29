@@ -5,6 +5,7 @@ import { borrarSesion, getToken } from '../utils/SessionUtil';
 import mensajes from '../utils/Mensajes';
 import { ObtenerGet, ObtenerPost, PostGuardar } from '../hooks/Conexion';
 import Form from 'react-bootstrap/Form';
+import swal from 'sweetalert';
 
 function AgregarEntrada() {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm();
@@ -30,7 +31,7 @@ function AgregarEntrada() {
                 }
             } catch (error) {
                 mensajes("Error al cargar los datos: " + error.message, 'error');
-            } 
+            }
         };
 
         fetchData();
@@ -49,11 +50,11 @@ function AgregarEntrada() {
                         }
                     } else {
                         setData(info.info);
-                        setValue('quantity', info.info.quantity);
+                        setValue('quantity', info.info.batch.availableQuantity);
                     }
                 } catch (error) {
                     mensajes("Error al cargar los datos: " + error.message, 'error');
-                } 
+                }
             };
 
             fetchData();
@@ -81,13 +82,28 @@ function AgregarEntrada() {
         });
     };
 
+    const handleCancelClick = () => {
+        swal({
+            title: "¿Está seguro de cancelar el movimiento?",
+            text: "Una vez cancelado, no podrá revertir esta acción",
+            icon: "warning",
+            buttons: ["No", "Sí"],
+            dangerMode: true,
+        }).then((willCancel) => {
+            if (willCancel) {
+                mensajes("Movimiento cancelado", "info", "Información");
+                navigate('/actualizar2');
+            } 
+        });
+    };
+
     return (
         <div className="wrapper">
             <Form className="user" onSubmit={handleSubmit(onSubmit)}>
 
                 {/* SELECCIONAR LOTE */}
                 <Form.Group className="mb-3">
-                    <Form.Label style={{fontWeight: 'bold'}}>Código de Lote</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold' }}>Código de Lote</Form.Label>
                     <Form.Control as="select" {...register('batchId', { required: 'Seleccione un lote' })} onChange={e => setLoteSeleccionado(e.target.value)}>
                         <option value="">Seleccione un lote</option>
                         {dataLotes.map((lote) => (
@@ -106,19 +122,18 @@ function AgregarEntrada() {
 
                 {/* INGRESAR DESCRIPCION */}
                 <Form.Group className="mb-3">
-                    <Form.Label style={{fontWeight: 'bold'}}>Detalle</Form.Label>
+                    <Form.Label style={{ fontWeight: 'bold' }}>Detalle</Form.Label>
                     <Form.Control as="textarea" rows={5} {...register('detail', { required: true })} placeholder="Ingrese el detalle" />
                     {errors.detail && <div className='alert alert-danger'>Ingrese un detalle</div>}
                 </Form.Group>
 
                 <div style={{ display: 'flex', gap: '10px', paddingTop: '10px' }}>
-                    <button className="btn btn-danger btn-rounded" type="button" onClick={() => navigate('/ordenes')}>
+                    <button className="btn btn-danger btn-rounded" type="button" onClick={handleCancelClick}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                         </svg>
                         <span style={{ padding: '5px', fontWeight: 'bold' }}>Cancelar</span>
-
                     </button>
                     <button className="btn btn-success btn-rounded" type="submit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">

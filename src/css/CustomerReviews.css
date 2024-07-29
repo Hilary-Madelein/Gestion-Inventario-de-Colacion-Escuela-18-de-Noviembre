@@ -27,3 +27,15 @@
     font-weight: bold;
     padding-left: 10px;
 }
+
+.CustomerReview span{
+    color: var(--green);
+    font-size: 15px;
+    
+}
+
+.CustomerReview ul {
+    list-style-type: disc; /* Añade viñetas */
+    padding-top: 20px;
+    text-align: left;
+}

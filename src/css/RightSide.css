@@ -1,26 +1,53 @@
-.RightSide{
-    display: flex;
-    flex-direction: column;
-    width: 95%;
-    justify-content: space-evenly;
-  }
-  
-  @media screen and (max-width: 1200px) {
-    .RightSide {
-      justify-content: flex-start;
-      margin-top: 3rem;
-    }
-  }
-  
-  @media screen and (max-width: 768px) {
-    .RightSide {
-      width: 100%;
-      margin-top: 0;
-    }
-    .RightSide > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+.RightSide {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  justify-content: space-evenly;
+}
+
+.RightSide .producto {
+  height: auto;
+  /* Ajustar automáticamente al contenido */
+  max-height: 600px;
+  /* Altura máxima para que no sea tan alta */
+  width: 100%;
+  background-color: #ffffff;
+  /* Fondo blanco */
+  padding: 2%;
+  /* Ajuste del relleno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  /* Sombra */
+  border: 1px solid #ffffff;
+  /* Borde resaltado */
+  border-radius: 0.4rem;
+  /* Bordes redondeados */
+  margin-top: 3rem;
+  /* Espacio superior para separar del título */
+}
+
+@media screen and (max-width: 1200px) {
+  .RightSide {
+    justify-content: flex-start;
   }
 
+  .RightSide .producto {
+    margin-top: 3rem; /* Asegúrate de que el margen superior solo se aplique a .producto */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .RightSide {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .RightSide > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .RightSide .producto {
+    margin-top: 3rem; /* Asegúrate de que el margen superior solo se aplique a .producto */
+  }
+}

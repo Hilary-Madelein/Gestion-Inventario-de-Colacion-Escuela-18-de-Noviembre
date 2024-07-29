@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Updates.css';
-import { borrarSesion, getToken } from '../utils/SessionUtil';
+import { borrarSesion, getBodega, getToken, saveBodega } from '../utils/SessionUtil';
 import mensajes from '../utils/Mensajes';
 import { ObtenerPost } from '../hooks/Conexion';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +23,7 @@ const Updates = () => {
                     }
                 } else {
                     setBodegaData(info.info);
+                    saveBodega(info.info.id);
                 }
             } catch (error) {
                 mensajes("Error al cargar los datos: " + error.message, 'error');
