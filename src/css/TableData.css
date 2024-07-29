@@ -48,6 +48,16 @@
   border-radius: 0.25rem;
 }
 
+.loading, .no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px; /* Ajusta la altura según sea necesario */
+  text-align: center;
+  color: #aaa;
+  font-size: 18px;
+}
+
 @media screen and (max-width: 1200px) {
   .Table {
     width: 170%;

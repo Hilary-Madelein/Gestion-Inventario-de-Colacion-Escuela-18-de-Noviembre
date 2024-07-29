@@ -5,14 +5,25 @@ import { borrarSesion, getToken } from '../utils/SessionUtil';
 import mensajes from '../utils/Mensajes';
 import { GuardarImages } from '../hooks/Conexion';
 import swal from 'sweetalert';
+import '../css/AgregarProducto.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function AgregarProducto() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+    const [imagePreview, setImagePreview] = useState(null);
+    const [errorImage, setErrorImage] = useState('');
+    const [isDragging, setIsDragging] = useState(false);
     const categories = ["LECHE", "MASA HORNEADA", "BOCADITO DE SAL", "GRANOLA", "JUGO/NECTAR", "BARRA CEREAL", "BEBIDA A BASE DE LECHE"];
 
     const onSubmit = data => {
+        if (data.photo[0].size > 2 * 1024 * 1024) {
+            setErrorImage('La imagen es muy pesada, debe ser menor a 2MB');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('name', data.name.toUpperCase());
         formData.append('category', categoriaSeleccionada);
@@ -45,6 +56,30 @@ function AgregarProducto() {
         });
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.size <= 2 * 1024 * 1024) {
+            setImagePreview(URL.createObjectURL(file));
+            setErrorImage('');
+        } else {
+            setImagePreview(null);
+            setErrorImage('La imagen es muy pesada, debe ser menor a 2MB');
+        }
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.size <= 2 * 1024 * 1024) {
+            setImagePreview(URL.createObjectURL(file));
+            setErrorImage('');
+        } else {
+            setImagePreview(null);
+            setErrorImage('La imagen es muy pesada, debe ser menor a 2MB');
+        }
+        setIsDragging(false);
+    };
+
     return (
         <div className="wrapper">
             <form className="user" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
@@ -72,7 +107,37 @@ function AgregarProducto() {
 
                 <div className="form-group mb-3">
                     <label style={{ fontWeight: 'bold', paddingTop: '20px' }}>Seleccionar foto</label>
-                    <input type="file" {...register('photo')} className="form-control" />
+                    <div 
+                        className={`image-upload-wrapper ${isDragging ? 'dragging' : ''}`} 
+                        onDrop={handleDrop} 
+                        onDragOver={(e) => {
+                            e.preventDefault();
+                            setIsDragging(true);
+                        }}
+                        onDragLeave={() => setIsDragging(false)}
+                        onClick={() => document.getElementById('photo').click()}
+                    >
+                        <input
+                            id="photo"
+                            type="file"
+                            className="form-control-file"
+                            {...register('photo', { required: 'Suba una foto' })}
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }}
+                        />
+                        <label htmlFor="photo" className="image-upload-label">
+                            {imagePreview ? (
+                                <img src={imagePreview} alt="Vista previa de la foto" className="img-thumbnail" />
+                            ) : (
+                                <div className="image-upload-placeholder">
+                                    <FontAwesomeIcon icon={faPlus} className="fa-icon" />
+                                    <p>Agregar una imagen</p>
+                                </div>
+                            )}
+                        </label>
+                    </div>
+                    {errors.photo && <div className='alert alert-danger'>{errors.photo.message}</div>}
+                    {errorImage && <div className='alert alert-danger'>{errorImage}</div>}
                 </div>
 
                 <div style={{ display: 'flex', gap: '10px', paddingTop: '40px' }}>
@@ -84,7 +149,7 @@ function AgregarProducto() {
                         <span style={{ padding: '5px', fontWeight: 'bold' }}>Cancelar</span>
                     </button>
                     <button className="btn btn-success btn-rounded" type="submit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                             <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
                         </svg>

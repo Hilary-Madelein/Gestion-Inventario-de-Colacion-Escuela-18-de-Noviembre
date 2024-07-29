@@ -53,6 +53,7 @@ const TableData = ({ kardexId }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             if (!kardexId) {
                 setLoteData([]);
                 setLoading(false);
@@ -88,14 +89,6 @@ const TableData = ({ kardexId }) => {
         fetchData();
     }, [kardexId, navigate]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (!loteData.length) {
-        return <div>Sin datos disponibles</div>;
-    }
-
     const getStatusStyle = (status) => {
         if (status === true) {
             return { backgroundColor: '#d4edda', color: '#155724', padding: '0.3rem 0.5rem', borderRadius: '0.25rem' };
@@ -112,57 +105,63 @@ const TableData = ({ kardexId }) => {
     return (
         <div className="TableData">
             <h3>Tabla de Lotes</h3>
-
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 400 }}>
-                    <MuiTable stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {loteData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.nro}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell
-                                                        key={column.id}
-                                                        align={column.align}
-                                                        style={column.id === 'status' ? getStatusStyle(value) : {}}
-                                                    >
-                                                        {column.id === 'status' ? getStatusText(value) :
-                                                            (column.format && typeof value === 'number' ? column.format(value) : value)}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
-                    </MuiTable>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={loteData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
+            
+            {loading ? (
+                <div className="loading">Cargando...</div>
+            ) : loteData.length === 0 ? (
+                <div className="no-data">Sin datos disponibles</div>
+            ) : (
+                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                    <TableContainer sx={{ maxHeight: 400 }}>
+                        <MuiTable stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{ minWidth: column.minWidth }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {loteData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.nro}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell
+                                                            key={column.id}
+                                                            align={column.align}
+                                                            style={column.id === 'status' ? getStatusStyle(value) : {}}
+                                                        >
+                                                            {column.id === 'status' ? getStatusText(value) :
+                                                                (column.format && typeof value === 'number' ? column.format(value) : value)}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>
+                        </MuiTable>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={loteData.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper>
+            )}
         </div>
     );
 }

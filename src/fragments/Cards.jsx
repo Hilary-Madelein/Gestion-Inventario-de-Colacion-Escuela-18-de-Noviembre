@@ -14,15 +14,19 @@ const Cards = ({ kardexId }) => { // Añadir kardexId prop
     porcentajeEntradas: 0,
     porcentajeSalidas: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDataOut = async () => {
+      setLoading(true);
+      setBodegaData({
+        porcentajeStock: 0,
+        porcentajeEntradas: 0,
+        porcentajeSalidas: 0,
+      });
+
       if (!kardexId) {
-        setBodegaData({
-          porcentajeStock: 0,
-          porcentajeEntradas: 0,
-          porcentajeSalidas: 0,
-        });
+        setLoading(false);
         return;
       }
 
@@ -40,11 +44,8 @@ const Cards = ({ kardexId }) => { // Añadir kardexId prop
         }
       } catch (error) {
         mensajes("Error al cargar los datos: " + error.message, 'error');
-        setBodegaData({
-          porcentajeStock: 0,
-          porcentajeEntradas: 0,
-          porcentajeSalidas: 0,
-        });
+      } finally {
+        setLoading(false);
       }
     };
 

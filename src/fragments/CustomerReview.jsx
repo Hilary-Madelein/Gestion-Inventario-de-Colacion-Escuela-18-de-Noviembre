@@ -35,7 +35,7 @@ const CustomerReview = ({ productoId, onKardexChange }) => { // Añadir onKardex
         }
       } catch (error) {
         setProductData(null);
-        mensajes("Error al cargar los datos: " + error.message, 'info');
+        mensajes(error.message, 'info');
         onKardexChange(null);
       } finally {
         setLoading(false);
@@ -45,27 +45,27 @@ const CustomerReview = ({ productoId, onKardexChange }) => { // Añadir onKardex
     fetchDataOut();
   }, [productoId, navigate, onKardexChange]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!productData) {
-    return <div>Sin datos disponibles</div>;
-  }
-
-  const imageUrl = productData.product.photo ? `${URLBASE}/images/products/${productData.product.photo}` : '/images/default.jpg';
+  const imageUrl = productData && productData.product.photo ? `${URLBASE}/images/products/${productData.product.photo}` : '/images/default.jpg';
 
   return (
     <div className="CustomerReview">
       <h3>Datos del producto</h3>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-        <img src={imageUrl} alt="Producto" style={{ width: '200px', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
-        <span style={{ fontWeight: 'bold', fontSize: '20px', paddingTop: '20px' }}>{productData.product.name}</span>
-        <ul>
-          <li><span><strong>Existencia máxima:</strong> {productData.maximumStock}</span></li>
-          <li><span><strong>Existencia mínima:</strong> {productData.minimumStock}</span></li>
-          <li><span><strong>Categoría:</strong> {productData.product.category}</span></li>
-        </ul>
+      <div className="product-details">
+        {loading ? (
+          <div className="loading">Cargando...</div>
+        ) : !productData ? (
+          <div className="no-data">Sin datos disponibles</div>
+        ) : (
+          <>
+            <img src={imageUrl} alt="Producto" className="product-image" />
+            <span className="product-name">{productData.product.name}</span>
+            <ul>
+              <li><span><strong>Existencia máxima:</strong> {productData.maximumStock}</span></li>
+              <li><span><strong>Existencia mínima:</strong> {productData.minimumStock}</span></li>
+              <li><span><strong>Categoría:</strong> {productData.product.category}</span></li>
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );

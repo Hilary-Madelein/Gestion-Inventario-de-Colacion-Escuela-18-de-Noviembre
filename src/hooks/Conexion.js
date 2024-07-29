@@ -26,7 +26,6 @@ export const ObtenerGet = async (key, url) => {
         method: "GET",
         headers: headers,
     })).json();
-    console.log("aaaa", datos);
     return datos;
 }
 
@@ -52,11 +51,6 @@ export const ObtenerPost = async (key, url, bodyData) => {
         } catch (error) {
             throw new Error(`La respuesta no es un JSON válido: ${text}`);
         }
-
-        if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.statusText} - ${datos.msg || ''}`);
-        }
-
         return datos;
 
     } catch (error) {
