@@ -7,7 +7,7 @@ import { ObtenerGet, ObtenerPost, PostGuardar } from '../hooks/Conexion';
 import Form from 'react-bootstrap/Form';
 import swal from 'sweetalert';
 
-function AgregarEntrada() {
+function AgregarSalida() {
     const { register, setValue, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [dataLotes, setDataLotes] = useState([]);
@@ -17,17 +17,31 @@ function AgregarEntrada() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const info = await ObtenerGet(getToken(), 'listar/lote');
-                if (info.code !== 200) {
-                    if (info.msg === 'Acceso denegado. Token ha expirado') {
-                        mensajes(info.msg, 'error');
+                const lotesInfo = await ObtenerGet(getToken(), 'listar/lote');
+                if (lotesInfo.code !== 200) {
+                    if (lotesInfo.msg === 'Acceso denegado. Token ha expirado') {
+                        mensajes(lotesInfo.msg, 'error');
                         borrarSesion();
                         navigate("/login");
                     } else {
-                        mensajes(info.msg, 'error');
+                        mensajes(lotesInfo.msg, 'error');
                     }
                 } else {
-                    setDataLotes(info.info);
+                    setDataLotes(lotesInfo.info);
+                }
+
+                if (loteSeleccionado) {
+                    const cantidadInfo = await ObtenerPost(getToken(), 'obtener/cantidad', { idBatch: loteSeleccionado });
+                    if (cantidadInfo.code !== 200) {
+                        mensajes(cantidadInfo.msg, 'error');
+                        if (cantidadInfo.msg === 'Acceso denegado. Token ha expirado') {
+                            borrarSesion();
+                            navigate("/login");
+                        }
+                    } else {
+                        setData(cantidadInfo.info);
+                        setValue('quantity', cantidadInfo.info.batch.availableQuantity);
+                    }
                 }
             } catch (error) {
                 mensajes("Error al cargar los datos: " + error.message, 'error');
@@ -35,30 +49,6 @@ function AgregarEntrada() {
         };
 
         fetchData();
-    }, [navigate]);
-
-    useEffect(() => {
-        if (loteSeleccionado) {
-            const fetchData = async () => {
-                try {
-                    const info = await ObtenerPost(getToken(), 'obtener/cantidad', { idBatch: loteSeleccionado });
-                    if (info.code !== 200) {
-                        mensajes(info.msg, 'error');
-                        if (info.msg === 'Acceso denegado. Token ha expirado') {
-                            borrarSesion();
-                            navigate("/login");
-                        }
-                    } else {
-                        setData(info.info);
-                        setValue('quantity', info.info.batch.availableQuantity);
-                    }
-                } catch (error) {
-                    mensajes("Error al cargar los datos: " + error.message, 'error');
-                }
-            };
-
-            fetchData();
-        }
     }, [loteSeleccionado, navigate, setValue]);
 
     const onSubmit = (data) => {
@@ -93,7 +83,7 @@ function AgregarEntrada() {
             if (willCancel) {
                 mensajes("Movimiento cancelado", "info", "Información");
                 navigate('/actualizar2');
-            } 
+            }
         });
     };
 
@@ -148,4 +138,4 @@ function AgregarEntrada() {
     );
 }
 
-export default AgregarEntrada;
+export default AgregarSalida;

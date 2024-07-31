@@ -3,7 +3,6 @@ import '../css/TableData.css';
 import '../css/TablaOrdenes.css';
 import '../css/global.css';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TablePagination } from '@mui/material';
-import { default as MuiTable } from '@mui/material/Table';
 import SideBar from "./Sidebar";
 import { Modal } from 'react-bootstrap';
 import AgregarEntrada from './AgregarEntrada';
@@ -12,6 +11,7 @@ import { borrarSesion, getToken } from '../utils/SessionUtil';
 import mensajes from '../utils/Mensajes';
 import { Obtener, ObtenerGet, ObtenerPost } from '../hooks/Conexion';
 import { useNavigate } from 'react-router-dom';
+import { default as MuiTable } from '@mui/material/Table';
 
 const columns = [
     { id: 'date', label: 'Fecha', minWidth: 50 },
@@ -28,8 +28,16 @@ function createData(date, code, detail, quantity, existence, expiryDate, expirat
 }
 
 const Ordenes = () => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [show, setShow] = useState(false);
+    const [showSalida, setShowSalida] = useState(false);
+    const [data, setData] = useState([]);
+    const [dataOut, setDataOut] = useState([]);
+    const [existenceData, setExistenceData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [productData, setProductData] = useState(null);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -40,102 +48,52 @@ const Ordenes = () => {
         setPage(0);
     };
 
-    //SHOW AGREGAR ENTRADA
-    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    //SHOW AGREGAR SALIDA
-    const [showSalida, setShowSalida] = useState(false);
     const handleCloseSalida = () => setShowSalida(false);
     const handleShowSalida = () => setShowSalida(true);
 
-    const [data, setData] = useState([]);
-    const [dataOut, setDataOut] = useState([]);
-    const [existenceData, setExistenceData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchAllData = async () => {
             try {
-                const info = await ObtenerPost(getToken(), 'obtener/entradas/items', { idKardex: 1 });
-                if (info.code !== 200) {
-                    mensajes(info.msg, 'error');
-                    if (info.msg === 'Acceso denegado. Token ha expirado') {
-                        borrarSesion();
-                        navigate("/login");
-                    }
-                } else {
-                    const newRows = info.info.map(item => createData(
-                        obtenerFechaFormateada(item.date),
-                        item.batch.code,
-                        item.detail,
-                        item.quantity,
-                        item.existence,
-                        obtenerFechaFormateada(item.batch.expiryDate),
-                        obtenerFechaFormateada(item.batch.expirationDate)
-                    ));
-                    setData(newRows);
-                }
-            } catch (error) {
-                mensajes("Error al cargar los datos: " + error.message, 'error');
-            } finally {
-                setLoading(false);
-            }
-        };
+                const [entradas, salidas, existencia, kardex] = await Promise.all([
+                    ObtenerPost(getToken(), 'obtener/entradas/items', { idKardex: 1 }),
+                    ObtenerPost(getToken(), 'obtener/salidas/items', { idKardex: 1 }),
+                    ObtenerGet(getToken(), 'obtener/existencia'),
+                    ObtenerPost(getToken(), 'obtener/kardex/lote', { "productId": 1, "warehouseId": 1 })
+                ]);
 
-        fetchData();
-
-    }, [navigate]);
-
-    useEffect(() => {
-        const fetchDataOut = async () => {
-            try {
-                const info = await ObtenerPost(getToken(), 'obtener/salidas/items', { idKardex: 1});
-                if (info.code !== 200) {
-                    mensajes(info.msg, 'error');
-                    if (info.msg === 'Acceso denegado. Token ha expirado') {
-                        borrarSesion();
-                        navigate("/login");
-                    }
-                } else {
-                    const newRows = info.info.map(item => createData(
-                        obtenerFechaFormateada(item.date),
-                        item.batch.code,
-                        item.detail,
-                        item.quantity,
-                        item.existence,
-                        obtenerFechaFormateada(item.batch.expiryDate),
-                        obtenerFechaFormateada(item.batch.expirationDate)
-                    ));
-                    setDataOut(newRows);
-                }
-            } catch (error) {
-                mensajes("Error al cargar los datos: " + error.message, 'error');
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchDataOut();
-
-    }, [navigate]);
-
-    useEffect(() => {
-        const fetchDataExistence = async () => {
-            try {
-                const info = await ObtenerGet(getToken(), 'obtener/existencia');
-                if (info.code !== 200) {
-                    if (info.msg === 'Acceso denegado. Token ha expirado') {
-                        mensajes(info.msg, 'error');
+                if (entradas.code !== 200 || salidas.code !== 200 || existencia.code !== 200 || kardex.code !== 200) {
+                    const errorMsg = entradas.msg || salidas.msg || existencia.msg || kardex.msg;
+                    if (errorMsg === 'Acceso denegado. Token ha expirado') {
                         borrarSesion();
                         navigate("/login");
                     } else {
-                        mensajes(info.msg, 'error');
+                        mensajes(errorMsg, 'error');
                     }
                 } else {
-                    setExistenceData(info.info);
+                    const newRowsEntradas = entradas.info.map(item => createData(
+                        obtenerFechaFormateada(item.date),
+                        item.batch.code,
+                        item.detail,
+                        item.quantity,
+                        item.existence,
+                        obtenerFechaFormateada(item.batch.expiryDate),
+                        obtenerFechaFormateada(item.batch.expirationDate)
+                    ));
+                    const newRowsSalidas = salidas.info.map(item => createData(
+                        obtenerFechaFormateada(item.date),
+                        item.batch.code,
+                        item.detail,
+                        item.quantity,
+                        item.existence,
+                        obtenerFechaFormateada(item.batch.expiryDate),
+                        obtenerFechaFormateada(item.batch.expirationDate)
+                    ));
+                    setData(newRowsEntradas);
+                    setDataOut(newRowsSalidas);
+                    setExistenceData(existencia.info);
+                    setProductData(kardex.info);
                 }
             } catch (error) {
                 mensajes("Error al cargar los datos: " + error.message, 'error');
@@ -144,7 +102,7 @@ const Ordenes = () => {
             }
         };
 
-        fetchDataExistence();
+        fetchAllData();
     }, [navigate]);
 
     const obtenerFechaFormateada = (fechaString) => {
@@ -161,23 +119,22 @@ const Ordenes = () => {
             <div className="SideBarContainer">
                 <SideBar />
             </div>
-
             <div className="MainContent">
                 <h1>Movimientos del Inventario</h1>
                 <div className="MainContent" style={{ position: 'relative' }}> {/* Asegúrate de que este contenedor tiene posición relativa */}
-                    {/* Contenido existente... */}
                     <div className="stock">
                         <h2>STOCK</h2>
                         <span>{existenceData.existence}</span>
+                        {productData && (
+                            <span style={{ paddingLeft: '10px' }}>{productData.product.name}</span>
+                        )}
                     </div>
-                    {/* Tablas y otros elementos... */}
                 </div>
-
                 <div className="TableData1">
                     <div className="TableContainer">
                         <div className="boton">
                             <Button variant="contained" color="success" className="addButton" onClick={handleShow}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-clipboard-plus-fill" viewBox="0 0 16 16">
                                     <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
                                     <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5zm4.5 6V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5a.5.5 0 0 1 1 0" />
                                 </svg>
